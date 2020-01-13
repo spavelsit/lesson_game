@@ -6,12 +6,12 @@ class Background {
   _nodes = []
 
   add(x, w, h, speed, color_idx) {
-    this._nodes.push(new Graph({x, y: -10, w, h, speed, color: stars_colors[color_idx]}))
+    this._nodes.push(new Graph({ x, y: -10, w, h, speed, color: stars_colors[color_idx] }))
   }
 
   draw() {
     if (this._nodes.length < this._count) {
-      this.add(random(0, width), random(1, 2), random(1, 2),  random(1, 3), random(0, stars_colors.length - 1))
+      this.add(random(0, width), random(1, 2), random(1, 2), random(1, 3), random(0, stars_colors.length - 1))
     }
 
     this._nodes.map((el, idx) => {
@@ -26,9 +26,11 @@ class Background {
 }
 
 class Player {
-  constructor() {}
+  constructor() { }
 
   _bullet = []
+
+  score = 0
 
   _lastFire = Date.now()
 
@@ -75,4 +77,68 @@ class Player {
       this._lastFire = Date.now()
     }
   }
+
+  collision(enemy) {
+    this._bullet.map(bullet => {
+      enemy.map((_enemy, idx) => {
+        if (isCollision(
+          {x: bullet.x, y: bullet.y, width: 30, height: 20},
+          {x: _enemy.x, y: _enemy.y, width: _enemy.w, height: _enemy.h - 20}
+        )) {
+          enemy.splice(idx, 1);
+          this.score += 1
+        }
+      })
+    })
+  }
+
+  writeScore() {
+    const element = document.createElement('p')
+
+    element.classList.add('score')
+
+    element.style.position = 'absolute'
+    element.style.color = 'white'
+    element.style.top = '10px'
+    element.style.left = '10px'
+
+    document.body.appendChild(element)
+
+    element.innerHTML = 0
+
+    return element
+  }
+}
+
+class Enemy {
+
+  constructor(count) {
+    this._count = count
+  }
+
+  _nodes = []
+  _lastCreateEnemy = Date.now()
+
+  add(x, speed) {
+    this._nodes.push(new Graph({ x, y: -100, w: 100, h: 100, speed, img: img_enemy }))
+  }
+
+  draw() {
+    if (this._nodes.length < this._count && Date.now() - this._lastCreateEnemy > 1000) {
+      this.add(random(0, width - 50), random(1, 3))
+      this._lastCreateEnemy = Date.now()
+    }
+
+    this._nodes.map((el, idx) => {
+      if (el.y > height) {
+        this._nodes.splice(idx, 1)
+      } else {
+        el.image();
+        el.y += el.speed;
+      }
+    })
+  }
+
+
+
 }
