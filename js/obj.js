@@ -79,17 +79,27 @@ class Player {
   }
 
   collision(enemy) {
-    this._bullet.map(bullet => {
-      enemy.map((_enemy, idx) => {
+    enemy.map((_enemy, idx) => {
+      this._bullet.map(bullet => {
         if (isCollision(
-          {x: bullet.x, y: bullet.y, width: 30, height: 20},
-          {x: _enemy.x, y: _enemy.y, width: _enemy.w, height: _enemy.h - 20}
+          { x: bullet.x, y: bullet.y, width: 30, height: 20 },
+          { x: _enemy.x, y: _enemy.y, width: _enemy.w, height: _enemy.h - 20 }
         )) {
           enemy.splice(idx, 1);
           this.score += 1
         }
+
+        
       })
+
+      if (isCollision(
+        { x: this._player.x, y: this._player.y, width: this._player.w, height: this._player.h },
+        { x: _enemy.x, y: _enemy.y, width: _enemy.w, height: _enemy.h - 20 }
+      )) { setGame(gameOver) }
     })
+
+
+
   }
 
   writeScore() {

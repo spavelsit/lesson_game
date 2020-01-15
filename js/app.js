@@ -4,6 +4,13 @@ const enemy = new Enemy(enemy_count)
 
 const input = player.writeScore()
 
+const gameOver = () => {
+  clearAll()
+  fillAll('black')
+
+  background.draw()
+}
+
 const game = () => {
   clearAll()
   fillAll('black')
