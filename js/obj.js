@@ -91,7 +91,7 @@ class Player {
 
         
       })
-
+      
       if (isCollision(
         { x: this._player.x, y: this._player.y, width: this._player.w, height: this._player.h },
         { x: _enemy.x, y: _enemy.y, width: _enemy.w, height: _enemy.h - 20 }

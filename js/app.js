@@ -9,6 +9,23 @@ const gameOver = () => {
   fillAll('black')
 
   background.draw()
+
+  document.querySelector('.gameover_score').innerHTML = player.score
+  document.querySelector('.gameover').style.display = 'flex'
+
+  document.querySelector('.gameover_button').addEventListener('click', function() {
+    player.score = 0
+
+    player._player.x = (width / 2) - 50
+    player._player.y = height - 110
+
+    enemy._nodes = []
+    player._bullet = []
+
+    document.querySelector('.gameover').style.display = 'none'
+
+    setGame(game)
+  })
 }
 
 const game = () => {
