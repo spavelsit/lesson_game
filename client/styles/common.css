@@ -18,6 +18,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.wrapper_score {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  color: #ffffff;
+}
+
+.gameover {
   display: none;
 }
 
@@ -44,4 +54,18 @@
 
 .container button:hover {
   opacity: .8;
+}
+
+.input_field {
+  display: flex;
+  height: 25px;
+  margin-top: 20px;
+}
+
+.input_field button{
+  margin-top: 0 !important;
+}
+
+.input_field input {
+  padding: 5px;
 }

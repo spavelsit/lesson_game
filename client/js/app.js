@@ -2,8 +2,7 @@ const background = new Background(bg_count)
 const player = new Player()
 const enemy = new Enemy(enemy_count)
 
-const input = player.writeScore()
-
+const input = document.querySelector('.score')
 const gameOver = () => {
   clearAll()
   fillAll('black')
@@ -22,6 +21,10 @@ const gameOver = () => {
     enemy._nodes = []
     player._bullet = []
 
+    player.time.min = 0
+    player.time.sec = 0
+    player.time.ms = 0
+
     document.querySelector('.gameover').style.display = 'none'
 
     setGame(game)
@@ -34,6 +37,7 @@ const game = () => {
 
   background.draw()
   
+  player.timer()
   player.startFire()
   player.draw()
   player.move()
@@ -45,4 +49,23 @@ const game = () => {
   input.innerHTML = player.score
 }
 
-startGame(game)
+const auth = () => {
+  clearAll()
+  fillAll('black')
+
+  background.draw()
+}
+
+document.querySelector('.login_button').addEventListener('click', function() {
+  const input = document.querySelector('.login_input')
+
+  if (input.value.length === 0) return
+
+  document.querySelector('.username').innerHTML = player.username = input.value
+
+  document.querySelector('.login').style.display = 'none'
+
+  setGame(game)
+})
+
+startGame(auth)

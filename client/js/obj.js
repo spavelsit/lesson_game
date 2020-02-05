@@ -32,6 +32,8 @@ class Player {
 
   score = 0
 
+  username = 'No name'
+
   _lastFire = Date.now()
 
   _player = new Graph({
@@ -41,6 +43,12 @@ class Player {
     w: 100,
     h: 100
   })
+
+  time = {
+    min: 0,
+    sec: 0,
+    ms: 0
+  }
 
   draw() {
     this._player.image()
@@ -95,28 +103,20 @@ class Player {
       if (isCollision(
         { x: this._player.x, y: this._player.y, width: this._player.w, height: this._player.h },
         { x: _enemy.x, y: _enemy.y, width: _enemy.w, height: _enemy.h - 20 }
-      )) { setGame(gameOver) }
+      )) { 
+        setGame(gameOver) 
+        createScore(this.username, document.querySelector('.time').innerHTML, this.score)
+      }
     })
-
-
-
   }
 
-  writeScore() {
-    const element = document.createElement('p')
+  timer() {
+    this.time.ms++
 
-    element.classList.add('score')
+    if (this.time.ms === 100) {this.time.ms = 0; this.time.sec++;}
+    if (this.time.sec === 60) {this.time.sec = 0; this.time.min++;}
 
-    element.style.position = 'absolute'
-    element.style.color = 'white'
-    element.style.top = '10px'
-    element.style.left = '10px'
-
-    document.body.appendChild(element)
-
-    element.innerHTML = 0
-
-    return element
+    document.querySelector('.time').innerHTML = `${this.time.min < 10 ? '0' + this.time.min : this.time.min}:${this.time.sec < 10 ? '0' + this.time.sec : this.time.sec}`
   }
 }
 

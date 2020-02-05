@@ -2,10 +2,10 @@ const Score = require('../models/Score')
 
 module.exports.get_score = async function(req, res) {
   try {
-    const scores = await Score.find().limit(9)
+    const scores = await Score.find().limit(9).sort({score: -1})
     res.status(200).json({
       status: true,
-      message: scores
+      scores
     })
   } catch (err) {
     res.status(500).json({
